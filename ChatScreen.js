@@ -31,12 +31,17 @@ const renderBubble = (props) => {
 };
 
 export default function ChatScreen({ route }) {
-    const { username, serverAddress } = route.params;
+    const { username, token, serverAddress, chatroom } = route.params;
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
+        console.log("Sending token: ", token);
         // Load existing messages from the server
-        fetch(`http://${serverAddress}/messages`)
+        fetch(`http://${serverAddress}/messages`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
             .then(response => response.json())
             .then(data => {
                 let formattedMessages = data.map(msg => ({
@@ -63,6 +68,7 @@ export default function ChatScreen({ route }) {
         fetch(`http://${serverAddress}/message`, {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
