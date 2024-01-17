@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 // Function to send login request
 async function loginUser(username, password, serverAddress) {
@@ -12,7 +12,7 @@ async function loginUser(username, password, serverAddress) {
     });
     const data = await response.json();
     console.log(data);
-    return data.Ok;
+    return data;
 }
 
 export default function ConfigScreen({ navigation }) {
@@ -20,30 +20,27 @@ export default function ConfigScreen({ navigation }) {
     const [password, setPassword] = useState('123');
     const [serverAddress, setServerAddress] = useState('0.0.0.0:8000');
     const [chatroom, setChatroom] = useState('default');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleStartChat = () => {
         loginUser(username, password, serverAddress)
-            .then(token => {
-                console.log("Got token: ", token);
-                navigation.navigate('Chat', { username, token, serverAddress, chatroom });
+            .then(response => {
+                if (response.Err != undefined) {
+                    setErrorMessage('Could not login: ' + response.Err);
+                } else {
+                    const token = response.Ok;
+                    navigation.navigate('Chat', { username, token, serverAddress, chatroom });
+                }
             })
             .catch(error => console.log(error));
     };
 
+    const handleRegistration = () => {
+        navigation.navigate('Registration');
+    };
+
     return (
         <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                placeholder="Enter your username"
-                value={username}
-                onChangeText={setUsername}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Enter your password"
-                value={password}
-                onChangeText={setPassword}
-            />
             <TextInput
                 style={styles.input}
                 placeholder="Enter server address"
@@ -56,7 +53,21 @@ export default function ConfigScreen({ navigation }) {
                 value={chatroom}
                 onChangeText={setChatroom}
             />
+            <TextInput
+                style={styles.input}
+                placeholder="Enter your username"
+                value={username}
+                onChangeText={setUsername}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="Enter your password"
+                value={password}
+                onChangeText={setPassword}
+            />
+            {errorMessage ? <Text style={{ color: 'red' }}>{errorMessage}</Text> : null}
             <Button title="Start Chat" onPress={handleStartChat} />
+            <Button title="Register New User" onPress={handleRegistration} />
         </View>
     );
 }
