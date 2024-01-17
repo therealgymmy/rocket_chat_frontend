@@ -28,6 +28,7 @@ export default function ConfigScreen({ navigation }) {
                 if (response.Err != undefined) {
                     setErrorMessage('Could not login: ' + response.Err);
                 } else {
+                    setErrorMessage('');
                     const token = response.Ok;
                     navigation.navigate('Chat', { username, token, serverAddress, chatroom });
                 }
