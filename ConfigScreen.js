@@ -37,6 +37,7 @@ export default function ConfigScreen({ navigation }) {
     };
 
     const handleRegistration = () => {
+        setErrorMessage('');
         navigation.navigate('Registration');
     };
 
