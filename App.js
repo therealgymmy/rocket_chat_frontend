@@ -1,4 +1,5 @@
 import React from 'react';
+import { SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ConfigScreen from './ConfigScreen';
@@ -9,12 +10,22 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Config" component={ConfigScreen} />
-        <Stack.Screen name="Registration" component={RegistrationScreen} />
-        <Stack.Screen name="Chat" component={ChatScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#f2f2f7' }}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: { backgroundColor: '#f2f2f7' },
+            headerTintColor: '#000',
+            headerTitleStyle: { fontWeight: 'bold' },
+            headerBackTitleVisible: true,
+            headerBackTitle: 'Back',
+          }}
+        >
+          <Stack.Screen name="Log In" component={ConfigScreen} />
+          <Stack.Screen name="Registration" component={RegistrationScreen} />
+          <Stack.Screen name="Chat" component={ChatScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
