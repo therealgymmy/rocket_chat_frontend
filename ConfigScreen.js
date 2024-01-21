@@ -18,8 +18,7 @@ async function loginUser(username, password, serverAddress) {
 export default function ConfigScreen({ navigation }) {
     const [username, setUsername] = useState('beyondsora');
     const [password, setPassword] = useState('123');
-    const [serverAddress, setServerAddress] = useState('0.0.0.0:8000');
-    const [chatroom, setChatroom] = useState('default');
+    const [serverAddress, setServerAddress] = useState('192.168.1.62:8000');
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleStartChat = () => {
@@ -30,7 +29,7 @@ export default function ConfigScreen({ navigation }) {
                 } else {
                     setErrorMessage('');
                     const token = response.Ok;
-                    navigation.navigate('Chat', { username, token, serverAddress, chatroom });
+                    navigation.navigate('Chat', { username, token, serverAddress });
                 }
             })
             .catch(error => console.log(error));
@@ -48,12 +47,6 @@ export default function ConfigScreen({ navigation }) {
                 placeholder="Enter server address"
                 value={serverAddress}
                 onChangeText={setServerAddress}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Enter chat room"
-                value={chatroom}
-                onChangeText={setChatroom}
             />
             <TextInput
                 style={styles.input}

@@ -31,7 +31,7 @@ const renderBubble = (props) => {
 };
 
 export default function ChatScreen({ route }) {
-    const { username, token, serverAddress, chatroom } = route.params;
+    const { username, token, serverAddress } = route.params;
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {

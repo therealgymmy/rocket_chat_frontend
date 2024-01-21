@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 
 const RegistrationScreen = ({ navigation }) => {
-    const [serverAddress, setServerAddress] = useState('0.0.0.0:8000');
+    const [serverAddress, setServerAddress] = useState('192.168.1.62:8000');
     const [email, setEmail] = useState('gymmy@random.com');
     const [username, setUsername] = useState('beyondsora');
     const [password, setPassword] = useState('123');
